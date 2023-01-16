@@ -1,3 +1,3 @@
 module.exports = {
-  trackabiDefaultURI: 'http://trackabi.com',
+  trackabiDefaultURI: 'https://trackabi.com',
 };
