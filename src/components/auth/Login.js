@@ -2,32 +2,56 @@ import React, {useContext} from 'react';
 import { Formik, Form, Field } from 'formik';
 import { Button, Grid, Typography } from "@mui/material";
 import { TextField } from 'formik-mui';
-import * as Yup from 'yup';
+// import * as Yup from 'yup';
 import { AuthContext } from "../../context/auth-context";
 
 const initialFormValue = { email: '', password: '' };
 const Login = () => {
   const { login } = useContext(AuthContext);
   const signIn = (values) => {
-    login(values.email, values.password);
+    // console.log(values);
+    var myHeaders = new Headers();
+    myHeaders.append("Accept", "application/json");
+    myHeaders.append("X-Requested-With", "XMLHttpRequest");
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+      "LoginForm": {
+        "email": "rajkodima@gmail.com",
+        "password": "QAZWSXEDCdima2001"
+      }
+    });
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    fetch("https://trackabi.com/user/login?realUtcOffset=120&timezone=Europe%2FKiev", requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+    login(values);
   }
 
-  const schema = Yup.object().shape({
-    email: Yup
-      .string()
-      .email("Please, enter email!")
-      .required("Email is required"),
-    password: Yup.string()
-      .required("Password is required")
-      .min(8, ""),
-  });
+  // const schema = Yup.object().shape({
+  //   email: Yup
+  //     .string()
+  //     .email("Please, enter email!")
+  //     .required("Email is required"),
+  //   password: Yup.string()
+  //     .required("Password is required")
+  //     .min(8, "Password is too short"),
+  // });
 
   return (
     <div className="content-wrapper">
       <Formik
         initialValues={initialFormValue}
         onSubmit={signIn}
-        validationSchema={schema}
+        // validationSchema={{}}
       >
         {({ isSubmitting }) => (
         <Form className="form login">

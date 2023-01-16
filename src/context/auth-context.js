@@ -1,6 +1,7 @@
 import {createContext, useEffect, useState} from "react";
-import { login as loginAPI } from '../services/auth/';
-import { useMutation } from "@tanstack/react-query";
+// import { login as loginAPI } from '../services/auth/';
+// import { useMutation } from "@tanstack/react-query";
+// import axios from "axios";
 
 export const AuthContext = createContext({});
 
@@ -14,12 +15,12 @@ export const AuthProvider = ({ children }) => {
   const [iaAuth, setIsAuth] = useState(false);
   const [isLoading, setIsLoading] = useState(true)
 
-  const { mutate: loginQuery } = useMutation({
-    mutationFn: (body) => loginAPI(body),
-    onSuccess: (data) => {
-      console.log(data);
-    },
-  })
+  // const { mutate: loginQuery } = useMutation({
+  //   mutationFn: (body) => loginAPI(body),
+  //   onSuccess: (data) => {
+  //     console.log(data);
+  //   },
+  // });
 
   useEffect(() => {
     // here must be checking  login
@@ -27,15 +28,60 @@ export const AuthProvider = ({ children }) => {
     setIsLoading(false);
   }, [])
 
-  const login = (email, password) => {
+  const login = () => {
     setIsLoading(true);
-    loginQuery({
-      LoginForm: {
-        email,
-        password,
-      }
-    })
 
+    // loginAPI({
+     //  LoginForm: {
+     //    email,
+     //    password,
+     //  }
+     // })
+     //  .then(r => console.log(r))
+     //  .catch(e => console.log('err:', e));
+     //  axios.post('https://trackabi.com/user/login?realUtcOffset=120&timezone=Europe%2FKiev',
+     //    { "LoginForm": values},
+     //    {
+     //      headers: {
+     //        'Content-Type': 'application/json',
+     //        'Accept': 'application/json',
+     //        'X-requested-with': 'XMLHttpRequest',
+     //        'Access-Control-Allow-Origin': '*',
+     //      }
+     //    })
+     //    .then(function (response) {
+     //      console.log('resp:', response);
+     //    })
+     //    .catch(function (error) {
+     //      console.log('err ', error);
+     //    });
+
+    var myHeaders = new Headers();
+    myHeaders.append("Accept", "application/json");
+    myHeaders.append("X-Requested-With", "XMLHttpRequest");
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+      "LoginForm": {
+        "email": "rajkodima@gmail.com",
+        "password": "QAZWSXEDCdima2001"
+      }
+    });
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    fetch("http://trackabi.com/user/login?realUtcOffset=120&timezone=Europe%2FKiev", requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+
+    // loginQuery({
+    //   );
     // if (email === 'rajkodima@gmail.com' && password === '12345678') {
     //   setUser({
     //     name: 'Dmitry',
