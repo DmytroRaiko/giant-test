@@ -43,9 +43,9 @@ const Header = () => {
               </Grid>
             </Grid>
             <Grid item>
-              {isAuth && (
+              {(isAuth && (
                 <Avatar alt="Remy Sharp" src="" />
-              ) || (
+              )) || (
                 <Button
                   component={DomLink}
                   to="login"
