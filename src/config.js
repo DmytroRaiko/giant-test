@@ -1,3 +1,3 @@
 module.exports = {
-  trackabiDefaultURI: 'https://trackabi.com',
+  trackabiDefaultURI: 'https://corsanywhereproxy.up.railway.app/https://trackabi.com',
 };

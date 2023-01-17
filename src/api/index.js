@@ -4,7 +4,7 @@ import { trackabiDefaultURI } from '../config';
 export const trackabiAPI = axios.create(
   {
     baseURL: trackabiDefaultURI,
-    withCredentials: true,
+    // withCredentials: true,
     // mode: 'cors',
 
     // proxy: {
