@@ -5,34 +5,10 @@ import { TextField } from 'formik-mui';
 // import * as Yup from 'yup';
 import { AuthContext } from "../../context/auth-context";
 
-const initialFormValue = { email: '', password: '' };
+const initialFormValue = { email: 'rajkodima@gmail.com', password: 'QAZWSXEDCdima2001' };
 const Login = () => {
   const { login } = useContext(AuthContext);
   const signIn = (values) => {
-    // console.log(values);
-    var myHeaders = new Headers();
-    myHeaders.append("Accept", "application/json");
-    myHeaders.append("X-Requested-With", "XMLHttpRequest");
-    myHeaders.append("Content-Type", "application/json");
-
-    var raw = JSON.stringify({
-      "LoginForm": {
-        "email": "rajkodima@gmail.com",
-        "password": "QAZWSXEDCdima2001"
-      }
-    });
-
-    var requestOptions = {
-      method: 'POST',
-      headers: myHeaders,
-      body: raw,
-      redirect: 'follow'
-    };
-
-    fetch("https://trackabi.com/user/login?realUtcOffset=120&timezone=Europe%2FKiev", requestOptions)
-      .then(response => response.text())
-      .then(result => console.log(result))
-      .catch(error => console.log('error', error));
     login(values);
   }
 

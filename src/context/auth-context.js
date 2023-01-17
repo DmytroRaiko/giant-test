@@ -1,7 +1,7 @@
 import {createContext, useEffect, useState} from "react";
 // import { login as loginAPI } from '../services/auth/';
 // import { useMutation } from "@tanstack/react-query";
-// import axios from "axios";
+import {trackabiAPI} from "../api";
 
 export const AuthContext = createContext({});
 
@@ -28,68 +28,27 @@ export const AuthProvider = ({ children }) => {
     setIsLoading(false);
   }, [])
 
-  const login = () => {
-    setIsLoading(true);
+  const login = async (values) => {
+    // setIsLoading(true);
 
-    // loginAPI({
-     //  LoginForm: {
-     //    email,
-     //    password,
-     //  }
-     // })
-     //  .then(r => console.log(r))
-     //  .catch(e => console.log('err:', e));
-     //  axios.post('https://trackabi.com/user/login?realUtcOffset=120&timezone=Europe%2FKiev',
-     //    { "LoginForm": values},
-     //    {
-     //      headers: {
-     //        'Content-Type': 'application/json',
-     //        'Accept': 'application/json',
-     //        'X-requested-with': 'XMLHttpRequest',
-     //        'Access-Control-Allow-Origin': '*',
-     //      }
-     //    })
-     //    .then(function (response) {
-     //      console.log('resp:', response);
-     //    })
-     //    .catch(function (error) {
-     //      console.log('err ', error);
-     //    });
-
-    var myHeaders = new Headers();
-    myHeaders.append("Accept", "application/json");
-    myHeaders.append("X-Requested-With", "XMLHttpRequest");
-    myHeaders.append("Content-Type", "application/json");
-
-    var raw = JSON.stringify({
-      "LoginForm": {
-        "email": "rajkodima@gmail.com",
-        "password": "QAZWSXEDCdima2001"
+    await trackabiAPI.post(
+      '/user/login?realUtcOffset=120&timezone=Europe%2FKiev',
+      {LoginForm: values},
+      {
+        proxy: {
+          protocol: 'https',
+          host: '164.70.122.6',
+          port: 3128,
+        },
+        // mode: 'cors',
+        // headers: {
+        //   'sec-fetch-dest': 'empty',
+        //   'sec-fetch-mode': 'cors',
+        //   'sec-fetch-site': 'same-origin'
+        // }
       }
-    });
-
-    var requestOptions = {
-      method: 'POST',
-      headers: myHeaders,
-      body: raw,
-      redirect: 'follow'
-    };
-
-    fetch("http://trackabi.com/user/login?realUtcOffset=120&timezone=Europe%2FKiev", requestOptions)
-      .then(response => response.text())
-      .then(result => console.log(result))
-      .catch(error => console.log('error', error));
-
-    // loginQuery({
-    //   );
-    // if (email === 'rajkodima@gmail.com' && password === '12345678') {
-    //   setUser({
-    //     name: 'Dmitry',
-    //     avatar: '',
-    //   });
-    //   setIsAuth(true);
-    // }
-    // setIsLoading(false)
+    )
+      .then(r => console.log(r));
   };
 
   const logout = () => {
