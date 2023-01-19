@@ -5,7 +5,7 @@ import { TextField } from 'formik-mui';
 import * as Yup from 'yup';
 import { AuthContext } from "../../context/auth-context";
 
-const initialFormValue = { email: 'rajkodima@gmail.com', password: 'QAZWSXEDCdima2001' };
+const initialFormValue = { email: '', password: '' };
 const Login = () => {
   const { isAuth, login, logout, error } = useContext(AuthContext);
 
