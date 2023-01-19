@@ -1,37 +1,50 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import { Formik, Form, Field } from 'formik';
-import { Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Paper, Typography } from "@mui/material";
 import { TextField } from 'formik-mui';
-// import * as Yup from 'yup';
+import * as Yup from 'yup';
 import { AuthContext } from "../../context/auth-context";
 
 const initialFormValue = { email: 'rajkodima@gmail.com', password: 'QAZWSXEDCdima2001' };
 const Login = () => {
-  const { login } = useContext(AuthContext);
+  const { isAuth, login, logout, error } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (isAuth) logout()
+  }, [isAuth])
+
   const signIn = (values) => {
     login(values);
   }
 
-  // const schema = Yup.object().shape({
-  //   email: Yup
-  //     .string()
-  //     .email("Please, enter email!")
-  //     .required("Email is required"),
-  //   password: Yup.string()
-  //     .required("Password is required")
-  //     .min(8, "Password is too short"),
-  // });
+  const schema = Yup.object().shape({
+    email: Yup
+      .string()
+      .email("Please, enter email!")
+      .required("Email is required"),
+    password: Yup.string()
+      .required("Password is required")
+      .min(8, "Password is too short"),
+  });
 
   return (
     <div className="content-wrapper">
       <Formik
         initialValues={initialFormValue}
         onSubmit={signIn}
-        // validationSchema={{}}
+        validationSchema={schema}
       >
         {({ isSubmitting }) => (
         <Form className="form login">
-          <Grid container width="100%" gap="30px" flexDirection="column" justifyContent="space-between" alignItems="center">
+          <Box
+            component={Paper}
+            sx={{
+              padding: '40px',
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
+            <Grid container width="100%" gap="30px" flexDirection="column" justifyContent="space-between" alignItems="center">
             <Typography variant="h4">
               Sign in
             </Typography>
@@ -42,6 +55,7 @@ const Login = () => {
               name="email"
               label="E-mail"
               placeholder="E-mail"
+              autoComplete="username"
             />
             <Field
               component={TextField}
@@ -49,12 +63,20 @@ const Login = () => {
               name="password"
               label="Password"
               placeholder="Password"
+              autoComplete="current-password"
             />
+
+            {error && (
+              <Typography color="error">
+                {error}
+              </Typography>
+            )}
 
             <Button type="submit" disabled={isSubmitting} variant="contained" size="large">
               Sign in
             </Button>
           </Grid>
+          </Box>
         </Form>
         )}
 

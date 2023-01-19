@@ -1,32 +1,35 @@
 import React, { useContext }  from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { AuthContext } from "./context/auth-context";
-import Loading from "./components/Loading/Loading";
-import Header from "./components/Header/Header";
-import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import Loading from "./components/loading/Loading";
+import Header from "./components/header/Header";
+import PrivateRoute from "./components/private-route/PrivateRoute";
 import Login from "./components/auth/Login";
+import Home from "./containers/home/Home";
+import NewProject from "./components/project/NewProject";
+import NotFound from "./components/errors/NotFound";
+import { AuthContext } from "./context/auth-context";
 
 function App() {
   const { isLoading } = useContext(AuthContext);
 
   if (isLoading) return <Loading />;
-
   return (
     <div className="App">
       <Header />
 
       <Routes>
-        <Route index element={<div> home </div>} />
+        <Route index element={<Home />} />
         <Route path="login" element={<Login />} />
         <Route
-          path="private"
+          path="new-project"
           element={
             <PrivateRoute>
-              <div> private </div>
+              <NewProject />
             </PrivateRoute>
           }
         />
-        {/*<Route path="*" element={<div />} />*/}
+
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );
