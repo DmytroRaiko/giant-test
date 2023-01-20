@@ -1,11 +1,7 @@
 import axios from 'axios';
-import { fullRequestURI, authTokenStorage } from "../services";
+import { authTokenStorage } from "../services";
 
-export const trackabiAPI = axios.create(
-  {
-    baseURL: fullRequestURI(),
-  },
-);
+export const trackabiAPI = axios.create({});
 
 trackabiAPI.defaults.headers['Content-Type'] = 'application/json';
 trackabiAPI.defaults.headers['Accept'] = 'application/json';

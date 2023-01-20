@@ -1,14 +1,10 @@
 import {
-  proxyURI,
   storageAuthTokenName,
   storageCurrentOrgName,
-  storageUserDataName,
-  trackabiDefaultURI
+  storageUserDataName
 } from "../config";
 
-export const fullRequestURI = (url = trackabiDefaultURI) => proxyURI + url;
-
-export const projectBaseURI = (orgName) => fullRequestURI(`https://${orgName}.trackabi.com`)
+export const projectBaseURI = (orgName) => `https://${orgName}.trackabi.com`;
 
 export const authTokenStorage = () => localStorage.getItem(storageAuthTokenName);
 
